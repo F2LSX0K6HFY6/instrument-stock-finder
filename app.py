@@ -5,20 +5,22 @@ from io import BytesIO
 st.title("Instrument Stock Finder")
 
 # Upload files
-devices_file = st.file_uploader(
-    "Upload Devices Excel",
-    type=["xlsx"]
-)
+@st.cache_data
+def load_data():
 
-stock_file = st.file_uploader(
-    "Upload Stock Excel",
-    type=["xlsx"]
-)
+    devices_url = "..."
 
-if devices_file and stock_file:
+    stock_url = "..."
 
-    devices_df = pd.read_excel(devices_file)
-    stock_df = pd.read_excel(stock_file)
+    devices_df = pd.read_excel(devices_url)
+
+    stock_df = pd.read_excel(stock_url)
+
+    return devices_df, stock_df
+
+
+devices_df, stock_df = load_data()
+
 
     # Remove spaces from column names
     devices_df.columns = devices_df.columns.str.strip()
